@@ -2,17 +2,19 @@ import './App.css';
 import CurrencyInput from "./CurrencyInput";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Navbar from "./Navbar.js"
+
 
 function App() {
 
   const [amount1, setAmount1] = useState(1);
   const [amount2, setAmount2] = useState(1);
   const [currency1, setCurrency1] = useState('USD');
-  const [currency2, setCurrency2] = useState('EUR');
+  const [currency2, setCurrency2] = useState('AUD');
   const [rates, setRates] = useState([])
 
   useEffect(() => {
-    axios.get('https://altexchangerateapi.herokuapp.com/latest?from=EUR')
+    axios.get(`https://altexchangerateapi.herokuapp.com/latest`)
       .then(response => {
         setRates(response.data.rates);
       })
@@ -53,18 +55,20 @@ function App() {
 
   return (
     <div>
+      <Navbar />
+      <h1>Currency Converter</h1>
       <CurrencyInput
         onAmountChange={handleAmount1Change}
         onCurrencyChange={handleCurrency1Change}
         currencies={Object.keys(rates)}
         amount={amount1}
-        currency={'currency1'} />
+        currency={currency1} />
       <CurrencyInput
         onAmountChange={handleAmount2Change}
         onCurrencyChange={handleCurrency2Change}
         currencies={Object.keys(rates)}
         amount={amount2}
-        currency={'currency2'} />
+        currency={currency2} />
     </div>
   );
 }
