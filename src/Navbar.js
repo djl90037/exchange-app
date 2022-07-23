@@ -1,13 +1,26 @@
+import { Link, useMatch, useResolvedPath } from "react-router-dom"
+
 export default function Navbar() {
   return <nav className="nav">
-    <a href="/" className="site-title">Currency Conversion</a>
+    <Link to="/CurrencyInput" className="site-title">
+      Currency Conversion
+    </Link>
     <ul>
-      <li className="active">
-        <a href="/CurrencyInput">Currency Converter</a>
-      </li>
-      <li>
-        <a href="/ExchangeRates.js">Exchange Rates</a>
-      </li>
+
+      <CustomLink to="/CurrencyInput">Currency Converter</CustomLink>
+      <CustomLink to="/ExchangeRates">Exchange Rates</CustomLink>
     </ul>
   </nav>
+}
+
+function CustomLink({ to, children, ...props }) {
+  const resolvedPath = useResolvedPath(to)
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true })
+  return (
+    <li className={isActive ? "active" : ""}>
+      <Link to={to} {...props}>
+        {children}
+      </Link>
+    </li>
+  )
 }

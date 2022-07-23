@@ -3,6 +3,9 @@ import CurrencyInput from "./CurrencyInput";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar.js"
+import ExchangeRates from './ExchangeRates';
+import { Route, Routes, BrowserRouter } from "react-router-dom"
+
 
 
 function App() {
@@ -53,22 +56,29 @@ function App() {
     setCurrency2(currency2);
   }
 
+
   return (
     <div>
       <Navbar />
-      <h1>Currency Converter</h1>
-      <CurrencyInput
-        onAmountChange={handleAmount1Change}
-        onCurrencyChange={handleCurrency1Change}
-        currencies={Object.keys(rates)}
-        amount={amount1}
-        currency={currency1} />
-      <CurrencyInput
-        onAmountChange={handleAmount2Change}
-        onCurrencyChange={handleCurrency2Change}
-        currencies={Object.keys(rates)}
-        amount={amount2}
-        currency={currency2} />
+      <Routes>
+        <Route path="/CurrencyInput" element={[<h1>Currency Converter</h1>,
+        <CurrencyInput
+          onAmountChange={handleAmount1Change}
+          onCurrencyChange={handleCurrency1Change}
+          currencies={Object.keys(rates)}
+          amount={amount1}
+          currency={currency1} />,
+        <CurrencyInput
+          onAmountChange={handleAmount2Change}
+          onCurrencyChange={handleCurrency2Change}
+          currencies={Object.keys(rates)}
+          amount={amount2}
+          currency={currency2} />]} />
+        <Route path="/ExchangeRates" element={<ExchangeRates />} />
+      </Routes>
+
+
+
     </div>
   );
 }
