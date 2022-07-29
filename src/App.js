@@ -3,8 +3,9 @@ import CurrencyInput from "./CurrencyInput";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar.js"
+import Table from "./ExchangeRates"
 import ExchangeRates from './ExchangeRates';
-import { Route, Routes, BrowserRouter } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 
 
 
@@ -74,7 +75,7 @@ function App() {
           currencies={Object.keys(rates)}
           amount={amount2}
           currency={currency2} />]} />
-        <Route path="/ExchangeRates" element={<ExchangeRates />} />
+        <Route path="/ExchangeRates" element={(<Table currencies={Object.keys(rates)} amount={Object.values(rates)} />)} />
       </Routes>
 
 

@@ -4,6 +4,11 @@ body {
   margin: 0;
 }
 
+.App {
+  text-align: center;
+  margin: 20px;
+}
+
 h1 {
   color: #eef;
   text-align: center;
