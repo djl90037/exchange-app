@@ -1,5 +1,5 @@
 table {
-  background-color: rgb(0, 219, 146);
+  background-color: #8f8b8b;
   border-collapse: collapse;
   max-width: 900px;
   width: 100%;
@@ -10,4 +10,19 @@ table th,
 table td {
   border: 1px solid #ddd;
   padding: 8px;
+}
+
+.input {
+  text-align: center;
+
+}
+
+h1 {
+  text-align: center;
+}
+
+.input input {
+  background-color: #8f8b8b;
+  border-radius: 7px;
+
 }

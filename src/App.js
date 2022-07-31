@@ -62,7 +62,21 @@ function App() {
     <div>
       <Navbar />
       <Routes>
-        <Route path="/CurrencyInput" element={[<h1>Currency Converter</h1>,
+        <Route path={"/"} element={[<h1>Currency Converter</h1>,
+        <CurrencyInput
+          onAmountChange={handleAmount1Change}
+          onCurrencyChange={handleCurrency1Change}
+          currencies={Object.keys(rates)}
+          amount={amount1}
+          currency={currency1} />,
+        <CurrencyInput
+          onAmountChange={handleAmount2Change}
+          onCurrencyChange={handleCurrency2Change}
+          currencies={Object.keys(rates)}
+          amount={amount2}
+          currency={currency2} />]} />
+
+        <Route path={"/CurrencyInput"} element={[<h1>Currency Converter</h1>,
         <CurrencyInput
           onAmountChange={handleAmount1Change}
           onCurrencyChange={handleCurrency1Change}

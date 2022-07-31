@@ -8,27 +8,31 @@ const Table = (props) => {
 
 
   const [rates, setRates] = useState([])
-
+  console.log(props);
   useEffect(() => {
     axios.get(`https://altexchangerateapi.herokuapp.com/latest`)
       .then(response => {
         setRates(response.data.rates);
-        console.log(rates);
+        console.log(response.data.rates);
       })
   }, [])
 
-  console.log(props);
+  console.log();
 
 
   return (
     <div>
-      <h2>Exchange Rates</h2>
-      <input type="number" value={props.amount} onChange={event => props.onAmountChange(event.target.value)} />
-      <select value={props.currency} onChange={event => props.onCurrencyChange(event.target.value)}>
-        {props.currencies.map((currency => (
-          <option value={currency}>{currency}</option>
-        )))}
-      </select>
+      <h1>Exchange Rates</h1>
+      <div className="input">
+        <input type="number" value={props.amount} onChange={event => props.onAmountChange(event.target.value)} />
+        <select value={props.currency} onChange={event => props.onCurrencyChange(event.target.value)}>
+          {props.currencies.map((currency => (
+            <option value={currency}>{currency}</option>
+          )))}
+        </select>
+
+
+      </div>
 
       <ReactBootStrap.Table striped bordered hover>
         <thead>
@@ -38,52 +42,19 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-
-
           {
             props.currencies.map((currency) => (
-
-
-
               <tr>
                 <td>{currency}</td>
-
-
               </tr>
-
-
-
             ))}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </tbody>
       </ReactBootStrap.Table>
     </div>
   )
 }
 
-const TableHeadItem = ({ item }) => <th>{item.heading}</th>
+
 
 
 
