@@ -6,6 +6,7 @@ import * as ReactBootStrap from 'react-bootstrap'
 
 const Table = (props) => {
 
+
   const [rates, setRates] = useState([])
 
   useEffect(() => {
@@ -37,23 +38,31 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            {
-              props.currencies.map((currency) => (
+
+
+          {
+            props.currencies.map((currency) => (
+
+
+
+              <tr>
                 <td>{currency}</td>
-              ))}
-          </tr>
-          <tr>
-
-            {
-
-              props.amount.map((amount) => (
-                <td>{amount}</td>
-
-              ))}
 
 
-          </tr>
+              </tr>
+
+
+
+            ))}
+
+
+
+
+
+
+
+
+
 
 
 
