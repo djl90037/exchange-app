@@ -6,7 +6,6 @@ export default function Navbar() {
       Currency Conversion
     </Link>
     <ul>
-
       <CustomLink to="/CurrencyInput">Currency Converter</CustomLink>
       <CustomLink to="/ExchangeRates">Exchange Rates</CustomLink>
     </ul>

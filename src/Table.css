@@ -10,6 +10,7 @@ table th,
 table td {
   border: 1px solid #ddd;
   padding: 8px;
+  width: 50%;
 }
 
 .input {
@@ -24,5 +25,16 @@ h1 {
 .input input {
   background-color: #8f8b8b;
   border-radius: 7px;
+  margin-right: 5px;
+}
 
+select {
+  background: #8f8b8b;
+  border-radius: 7px;
+  padding: 2.25px;
+}
+
+h1 {
+  margin-bottom: 1.25rem !important;
+  margin-top: 1rem !important;
 }
