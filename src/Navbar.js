@@ -2,11 +2,11 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom"
 
 export default function Navbar() {
   return <nav className="nav">
-    <Link to="/CurrencyInput" className="site-title">
+    <Link to="/" className="site-title">
       Currency Conversion
     </Link>
     <ul>
-      <CustomLink to="/CurrencyInput">Currency Converter</CustomLink>
+      <CustomLink to="/">Currency Converter</CustomLink>
       <CustomLink to="/ExchangeRates">Exchange Rates</CustomLink>
     </ul>
   </nav>

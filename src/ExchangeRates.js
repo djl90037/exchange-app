@@ -14,6 +14,8 @@ function Table(props) {
     return number.toFixed(4);
   }
 
+
+
   useEffect(() => {
     axios.get(`https://altexchangerateapi.herokuapp.com/latest?from=${base}`)
       .then(response => {
@@ -22,16 +24,37 @@ function Table(props) {
       })
   }, [base])
 
+  console.log(Object.values(base));
+
   return (
     <div>
       <h1>Exchange Rates</h1>
       <div className="input">
+
+        {/* input amount */}
         <input type="number" value={baseAmount} onChange={e => setBaseAmount(e.target.value)} />
-        <select value={base} onChange={e => setBase(e.target.value)}>
-          {props.currencies.map((currency => (
-            <option >{currency}</option>
+
+        {/* select currency */}
+        <select key={base}
+
+
+          currencies={Object.keys(rates)}
+          value={Object.values(base)}
+          onChange={event => setBase(event.target.value)} >
+          {Object.keys(rates).map((currency => (
+            <option
+
+              value={currency}>{currency}</option>
           )))}
         </select>
+        {/* <select
+          value={Object.base}
+          onChange={e => setBase(e.target.value)}>
+
+          {Object.keys(rates).map((currency => (
+            <option value={currency} >{currency}</option>
+          )))}
+        </select> */}
       </div>
 
       <ReactBootStrap.Table striped bordered hover>
