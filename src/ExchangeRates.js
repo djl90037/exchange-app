@@ -7,14 +7,12 @@ import './Table.css'
 function Table(props) {
 
   const [rates, setRates] = useState([])
-  const [base, setBase] = useState('AUD');
+  const [base, setBase] = useState('EUR');
   const [baseAmount, setBaseAmount] = useState(1)
 
   function format(number) {
     return number.toFixed(4);
   }
-
-
 
   useEffect(() => {
     axios.get(`https://altexchangerateapi.herokuapp.com/latest?from=${base}`)
@@ -24,7 +22,8 @@ function Table(props) {
       })
   }, [base])
 
-  console.log(Object.values(base));
+  console.log(base);
+
 
   return (
     <div>
@@ -35,11 +34,9 @@ function Table(props) {
         <input type="number" value={baseAmount} onChange={e => setBaseAmount(e.target.value)} />
 
         {/* select currency */}
-        <select key={base}
-
-
-          currencies={Object.keys(rates)}
-          value={Object.values(base)}
+        <select
+          key={base}
+          value={base}
           onChange={event => setBase(event.target.value)} >
           {Object.keys(rates).map((currency => (
             <option
@@ -47,14 +44,6 @@ function Table(props) {
               value={currency}>{currency}</option>
           )))}
         </select>
-        {/* <select
-          value={Object.base}
-          onChange={e => setBase(e.target.value)}>
-
-          {Object.keys(rates).map((currency => (
-            <option value={currency} >{currency}</option>
-          )))}
-        </select> */}
       </div>
 
       <ReactBootStrap.Table striped bordered hover>

@@ -7,8 +7,6 @@ import Table from "./ExchangeRates"
 
 function App() {
 
-
-
   return (
     <div>
       <Navbar />

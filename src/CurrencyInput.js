@@ -56,6 +56,7 @@ function CurrencyInput() {
 
     <div className="group">
 
+
       <input
         type="number"
         value={amount1}
