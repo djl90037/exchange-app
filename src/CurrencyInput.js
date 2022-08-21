@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
 import './currencyInput.css';
 
 function CurrencyInput() {
@@ -69,6 +68,7 @@ function CurrencyInput() {
         onChange={event => handleCurrency1Change(event.target.value)}>
         {Object.keys(rates).map((currency => (
           <option
+            key={currency}
             currency={currency1}
             value={currency}>{currency}</option>
         )))}
@@ -79,11 +79,13 @@ function CurrencyInput() {
 
         onChange={event => handleAmount2Change(event.target.value)} />
       <select
+
         currencies={Object.keys(rates)}
         value={currency2}
         onChange={event => handleCurrency2Change(event.target.value)}>
         {Object.keys(rates).map((currency => (
           <option
+            key={currency}
             currency={currency2}
             value={currency}>{currency}</option>
         )))}
@@ -92,13 +94,7 @@ function CurrencyInput() {
   );
 }
 
-CurrencyInput.propTypes = {
-  amount: PropTypes.number.isRequired,
-  currency: PropTypes.string.isRequired,
-  currencies: PropTypes.array,
-  onAmountChange: PropTypes.func,
-  onCurrencyChange: PropTypes.func,
-}
+
 
 
 export default CurrencyInput;

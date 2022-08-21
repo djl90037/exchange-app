@@ -10,6 +10,7 @@ function Table(props) {
   const [base, setBase] = useState('EUR');
   const [baseAmount, setBaseAmount] = useState(1)
 
+
   function format(number) {
     return number.toFixed(4);
   }
@@ -18,11 +19,13 @@ function Table(props) {
     axios.get(`https://altexchangerateapi.herokuapp.com/latest?from=${base}`)
       .then(response => {
         setRates(response.data.rates);
-        console.log(response.data.rates);
+
       })
-  }, [base])
+  }, [])
 
   console.log(base);
+  console.log(rates)
+
 
 
   return (
@@ -35,12 +38,12 @@ function Table(props) {
 
         {/* select currency */}
         <select
-          key={base}
+
           value={base}
-          onChange={event => setBase(event.target.value)} >
+          onChange={e => setBase(e.target.value)} >
           {Object.keys(rates).map((currency => (
             <option
-
+              key={currency}
               value={currency}>{currency}</option>
           )))}
         </select>
@@ -56,7 +59,7 @@ function Table(props) {
         <tbody>
           {
             Object.keys(rates).map((currency) => (
-              <tr>
+              <tr key={currency}>
                 <td>{currency}</td>
                 <td>{format(rates[currency] * baseAmount)}</td>
               </tr>
