@@ -32,9 +32,15 @@ select {
   background: #8f8b8b;
   border-radius: 7px;
   padding: 2.25px;
+  text-align: center;
 }
 
 h1 {
   margin-bottom: 1.25rem !important;
   margin-top: 1rem !important;
+}
+
+h3 {
+  color: #eef;
+  text-align: center;
 }

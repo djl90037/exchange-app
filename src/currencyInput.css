@@ -7,6 +7,14 @@
   border-radius: 10px;
 }
 
+.groupB {
+  background: #8f8b8b;
+  width: 40px;
+  margin: auto;
+  display: grid;
+  border-radius: 10px;
+}
+
 
 
 input,

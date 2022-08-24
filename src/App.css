@@ -1,15 +1,16 @@
 body {
-  background-color: rgba(8, 119, 6, 0.902) !important;
-  color: #ddd;
-  margin: 0;
-}
-
-.App {
-  text-align: center;
-  margin: 20px;
-}
-
-h1 {
-  color: #eef;
-  text-align: center;
-}
+    background-color: rgba(8, 119, 6, 0.902) !important;
+    color: #ddd;
+    margin: 0;
+  }
+  
+  .App {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  h1 {
+    color: #eef;
+    text-align: center;
+  }
+  
