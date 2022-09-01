@@ -5,6 +5,7 @@ import CurrencyInput from "./CurrencyInput";
 import Table from "./ExchangeRates"
 
 
+
 function App() {
 
   return (
@@ -21,6 +22,7 @@ function App() {
         {/* Exchange Rate Table */}
         <Route path="/ExchangeRates" element={(<Table />)} />
       </Routes>
+      
     </div>
   );
 }

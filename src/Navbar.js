@@ -1,15 +1,23 @@
+import React from "react"
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 
-export default function Navbar() {
-  return <nav className="nav">
-    <Link to="/" className="site-title">
-      Currency Conversion
-    </Link>
-    <ul>
-      <CustomLink to="/">Currency Converter</CustomLink>
-      <CustomLink to="/ExchangeRates">Exchange Rates</CustomLink>
-    </ul>
-  </nav>
+const Navbar = (props) => {
+  return (
+    <React.Fragment>
+      <nav className="nav">
+        <Link to="/" className="site-title">
+          Currency Conversion
+        </Link>
+        <ul>
+          <CustomLink to="/">Currency Converter</CustomLink>
+          <CustomLink to="/ExchangeRates">Exchange Rates</CustomLink>
+        </ul>
+      </nav>
+      {/* <div className="container">
+        {props.children}
+      </div> */}
+    </React.Fragment>
+  )
 }
 
 function CustomLink({ to, children, ...props }) {
@@ -23,3 +31,5 @@ function CustomLink({ to, children, ...props }) {
     </li>
   )
 }
+
+export default Navbar

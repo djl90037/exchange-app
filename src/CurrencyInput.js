@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import './currencyInput.css';
+import Footer from './Footer'
+import './App.css';
 
 function CurrencyInput() {
 
@@ -52,45 +53,51 @@ function CurrencyInput() {
   }
 
   return (
+    <div>
 
-    <div className="group">
+
+      <div className="group">
 
 
-      <input
-        type="number"
-        value={amount1}
-        onChange={event => handleAmount1Change(event.target.value)}
-      />
-      <select
+        <input
+          type="number"
+          value={amount1}
+          onChange={event => handleAmount1Change(event.target.value)}
+        />
+        <select
 
-        currencies={Object.keys(rates)}
-        value={currency1}
-        onChange={event => handleCurrency1Change(event.target.value)}>
-        {Object.keys(rates).map((currency => (
-          <option
-            key={currency}
-            currency={currency1}
-            value={currency}>{currency}</option>
-        )))}
-      </select>
-      <input type="number"
+          currencies={Object.keys(rates)}
+          value={currency1}
+          onChange={event => handleCurrency1Change(event.target.value)}>
+          {Object.keys(rates).map((currency => (
+            <option
+              key={currency}
+              currency={currency1}
+              value={currency}>{currency}</option>
+          )))}
+        </select>
+        <input type="number"
 
-        value={amount2}
+          value={amount2}
 
-        onChange={event => handleAmount2Change(event.target.value)} />
-      <select
+          onChange={event => handleAmount2Change(event.target.value)} />
+        <select
 
-        currencies={Object.keys(rates)}
-        value={currency2}
-        onChange={event => handleCurrency2Change(event.target.value)}>
-        {Object.keys(rates).map((currency => (
-          <option
-            key={currency}
-            currency={currency2}
-            value={currency}>{currency}</option>
-        )))}
-      </select>
+          currencies={Object.keys(rates)}
+          value={currency2}
+          onChange={event => handleCurrency2Change(event.target.value)}>
+          {Object.keys(rates).map((currency => (
+            <option
+              key={currency}
+              currency={currency2}
+              value={currency}>{currency}</option>
+          )))}
+        </select>
+
+      </div>
+      <Footer data={'view2'} />
     </div>
+
   );
 }
 

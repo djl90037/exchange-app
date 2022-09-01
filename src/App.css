@@ -1,16 +1,82 @@
+html {
+  position: relative;
+}
+
 body {
-    background-color: rgba(8, 119, 6, 0.902) !important;
-    color: #ddd;
-    margin: 0;
-  }
+  background-color: rgba(8, 119, 6, 0.902) !important;
+  color: #ddd;
+  margin: 0;
+
+  position: relative;
+  min-height: 100vh;
+}
+
+
+.App {
+  text-align: center;
+  margin: 20px;
+}
   
-  .App {
-    text-align: center;
-    margin: 20px;
-  }
+h1 {
+  color: #eef;
+  text-align: center;
+}
   
-  h1 {
-    color: #eef;
-    text-align: center;
-  }
+footer {
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  padding-left: .75rem;
+}
+
+.view1 {
+  position: relative;
   
+}
+
+.view2 {
+  position: absolute;
+}
+
+
+.group {
+  background: #8f8b8b;
+  width: 180px;
+  margin: 0 auto 20px;
+  display: grid;
+  grid-template-columns: 100px 80px;
+  border-radius: 10px;
+}
+
+.groupB {
+  background: #8f8b8b;
+  width: 40px;
+  margin: auto;
+  display: grid;
+  border-radius: 10px;
+}
+
+
+
+input,
+select {
+  background: none;
+  border: 0;
+  /* color: white; */
+}
+
+input {
+  padding-left: 10px;
+
+}
+
+select {
+  padding: 6px;
+}
+
+a {
+  color: #579aec;
+}
+a:visited {
+  color: #636;
+}

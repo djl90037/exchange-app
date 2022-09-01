@@ -2,8 +2,8 @@ import React from 'react'
 import './Table.css'
 import { checkStatus, json } from './utils/fetchUtils'
 import currencies from './utils/currencies'
-import './currencyInput.css';
 import CurrencyTable from './CurrencyTable'
+import Footer from './Footer'
 
 
 class ExchangeRates extends React.Component {
@@ -54,7 +54,7 @@ class ExchangeRates extends React.Component {
 
     return (
       <React.Fragment>
-        <h3 className="mb-2">Base currency: 1</h3>
+        <h3 className="m-3">Base currency: 1</h3>
         <div className='groupB'>
 
 
@@ -68,6 +68,10 @@ class ExchangeRates extends React.Component {
           </select>
         </div>
         <CurrencyTable base={base} rates={rates} />
+        <div>
+
+        <Footer data={'view1'}/>
+        </div>
       </React.Fragment>
     )
 
@@ -78,44 +82,3 @@ class ExchangeRates extends React.Component {
 export default ExchangeRates
 
 
-
-// return (
-//   <div>
-//     <h1>Exchange Rates</h1>
-//     <div className="input">
-
-//       {/* input amount */}
-//       <input type="number" value={baseAmount} onChange={e => setBaseAmount(e.target.value)} />
-
-//       {/* select currency */}
-//       <select
-
-//         value={base}
-//         onChange={e => setBase(e.target.value)} >
-//         {Object.keys(rates).map((currency => (
-//           <option
-//             key={currency}
-//             value={currency}>{currency}</option>
-//         )))}
-//       </select>
-//     </div>
-
-    // <ReactBootStrap.Table striped bordered hover>
-    //   <thead>
-    //     <tr>
-    //       <th>Currency</th>
-    //       <th>Amount</th>
-    //     </tr>
-    //   </thead>
-    //   <tbody>
-    //     {
-    //       Object.keys(rates).map((currency) => (
-    //         <tr key={currency}>
-    //           <td>{currency}</td>
-    //           <td>{format(rates[currency] * baseAmount)}</td>
-    //         </tr>
-    //       ))}
-    //   </tbody>
-    // </ReactBootStrap.Table>
-//   </div>
-// )
