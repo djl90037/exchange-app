@@ -77,6 +77,10 @@ select {
 a {
   color: #579aec;
 }
-a:visited {
-  color: #636;
+
+
+canvas {
+  max-height: 600px;
+  max-width: 1200px;
+  margin: 0 auto;
 }

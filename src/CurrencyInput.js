@@ -1,107 +1,215 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import  React  from "react";
+import currencies from './utils/currencies';
+import { checkStatus, json } from './utils/fetchUtils';
 import Footer from './Footer'
 import './App.css';
-
-function CurrencyInput() {
-
-  const [amount1, setAmount1] = useState(1);
-  const [amount2, setAmount2] = useState(1);
-  const [currency1, setCurrency1] = useState('USD');
-  const [currency2, setCurrency2] = useState('AUD');
-  const [rates, setRates] = useState([])
+import Chart from 'chart.js'
 
 
-  useEffect(() => {
-    axios.get(`https://altexchangerateapi.herokuapp.com/latest`)
-      .then(response => {
-        setRates(response.data.rates);
-      })
-  }, [])
+class CurrencyInput extends React.Component {
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    if (!rates) {
-      function init() {
-        handleAmount1Change(1);
+    this.state = {
+      rate: 109.55,
+      baseAcronym: 'USD',
+      baseValue: 1,
+      quoteAcronym: 'JPY',
+      quoteValue: 1 * 109.55,
+      loading: false,
+    };
+
+    this.chartRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const { baseAcronym, quoteAcronym } = this.state;
+    this.getRate(baseAcronym, quoteAcronym);
+    this.getHistoricalRates(baseAcronym, quoteAcronym)
+  }
+
+  getRate = (base, quote) => {
+    this.setState({ loading: true });
+    fetch(`https://api.frankfurter.app/latest?from=${base}&to=${quote}`)
+    .then(checkStatus)
+    .then(json)
+    .then(data => {
+      if (data.error) {
+        throw new Error(data.error);
       }
-      init();
+
+      const rate = data.rates[quote];
+
+      this.setState({
+        rate,
+        baseValue: 1,
+        quoteValue: Number((1 * rate).toFixed(3)),
+        loading: false,
+      });
+    })
+    .catch(error => console.error(error.message));
+  }
+
+  getHistoricalRates = (base, quote) => {
+    const endDate = new Date().toISOString().split('T')[0];
+    const startDate = new Date((new Date).getTime() - (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
+    console.log(startDate)
+    console.log(endDate)
+
+    fetch(`https://api.frankfurter.app/${startDate}..${endDate}?from=${base}&to=${quote}`)
+    .then(checkStatus)
+    .then(json)
+    .then(data => {
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      const chartLabels = Object.keys(data.rates);
+      const chartData = Object.values(data.rates).map(rate => rate[quote]);
+      const chartLabel = `${base}/${quote}`;
+      this.buildChart(chartLabels, chartData, chartLabel);
+    })
+    .catch(error => console.error(error.message));
+  }
+
+  buildChart = (labels, data, label) => {
+    Chart.defaults.global.defaultFontColor = '#bbb6b6';
+    const chartRef = this.chartRef.current.getContext("2d");
+
+    if (typeof this.chart !== "undefined") {
+      this.chart.destroy();
     }
-  }, [rates]);
 
-  function format(number) {
-    return number.toFixed(4);
+    this.chart = new Chart(this.chartRef.current.getContext("2d"), {
+
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: label,
+            data,
+            fill: false,
+            tension: 0,
+            borderColor: '#bbb6b6',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          xAxes: [{
+            gridLines: {
+              color: "#bbb6b6"
+            },
+            display: true,
+          }],
+          yAxes: [{
+            gridLines: {
+              color: "#bbb6b6"
+            },
+            display: true,
+          }],
+        }
+      }
+    })
   }
 
-  function handleAmount1Change(amount1) {
-    setAmount2(format(amount1 * rates[currency2] / rates[currency1]));
-    setAmount1(amount1);
+  toBase(amount, rate) {
+    return amount * (1 / rate);
   }
 
-  function handleCurrency1Change(currency1) {
-    setAmount2(format(amount1 * rates[currency2] / rates[currency1]));
-    setCurrency1(currency1);
+  toQuote(amount, rate) {
+    return amount * rate;
   }
 
-  function handleAmount2Change(amount2) {
-    setAmount1(format(amount2 * rates[currency1] / rates[currency2]));
-    setAmount2(amount2);
+  convert(amount, rate, equation) {
+    const input = parseFloat(amount);
+    if(Number.isNaN(input)) {
+      return '';
+    }
+    return equation(input, rate).toFixed(3);
   }
 
-  function handleCurrency2Change(currency2) {
-    setAmount1(format(amount2 * rates[currency1] / rates[currency2]));
-    setCurrency2(currency2);
+  changeBaseAcronym = (event) => {
+    const baseAcronym = event.target.value;
+    this.setState({ baseAcronym })
+    this.getRate(baseAcronym, this.state.quoteAcronym);
+    this.getHistoricalRates(baseAcronym, this.state.quoteAcronym)
   }
 
-  return (
-    <div>
+  changeBaseValue = (event) => {
+    const quoteValue = this.convert(event.target.value, this.state.rate, this.toQuote);
+    this.setState({
+      baseValue: event.target.value,
+      quoteValue,
+    });
+  }
 
+  changeQuoteAcronym = (event) => {
+    const quoteAcronym = event.target.value;
+    this.setState({ quoteAcronym });
+    this.getRate(this.state.baseAcronym, quoteAcronym);
+    this.getHistoricalRates(this.state.baseAcronym, quoteAcronym)
+  }
 
-      <div className="group">
+  changeQuoteValue = (event) => {
+    const baseValue = this.convert(event.target.value, this.state.rate, this.toBase);
+    this.setState({
+      quoteValue: event.target.value,
+      baseValue,
+    });
+  }
 
+  render() {
+    const { rate, baseAcronym, baseValue, quoteAcronym, quoteValue, loading } = this.state;
+    const currencyOptions = Object.keys(currencies).map(currencyAcronym => <option key={currencyAcronym} value={currencyAcronym}>{currencyAcronym}</option>);
 
-        <input
-          type="number"
-          value={amount1}
-          onChange={event => handleAmount1Change(event.target.value)}
-        />
-        <select
+    return (
+      <React.Fragment>
+        <div>
+          <div className="group">
+            <input
+              id="base"
+              type="number"
+              value={baseValue}
+              onChange={this.changeBaseValue}
+            />
 
-          currencies={Object.keys(rates)}
-          value={currency1}
-          onChange={event => handleCurrency1Change(event.target.value)}>
-          {Object.keys(rates).map((currency => (
-            <option
-              key={currency}
-              currency={currency1}
-              value={currency}>{currency}</option>
-          )))}
-        </select>
-        <input type="number"
+            <select
+              value={baseAcronym}
+              onChange={this.changeBaseAcronym}
+              disabled={loading}>
+              {currencyOptions}
+            </select>
 
-          value={amount2}
+            <input 
+              id="quote"
+              type="number"
+              value={quoteValue}
+              onChange={this.changeQuoteValue} />
 
-          onChange={event => handleAmount2Change(event.target.value)} />
-        <select
+            <select
 
-          currencies={Object.keys(rates)}
-          value={currency2}
-          onChange={event => handleCurrency2Change(event.target.value)}>
-          {Object.keys(rates).map((currency => (
-            <option
-              key={currency}
-              currency={currency2}
-              value={currency}>{currency}</option>
-          )))}
-        </select>
+              value={quoteAcronym}
+              onChange={this.changeQuoteAcronym}
+              disabled={loading}>
+                {currencyOptions}
+            </select>
+            
 
-      </div>
-      <Footer data={'view2'} />
-    </div>
+          </div>
 
-  );
+          <div className ="text-center p-3">
+            <h4>1 {baseAcronym} to 1 {quoteAcronym} = {rate} {currencies[quoteAcronym].name}</h4>
+          </div>
+          <canvas ref={this.chartRef} />
+          <Footer data={'view2'} />
+        </div>
+      </React.Fragment>
+    )
+  }
 }
-
-
 
 
 export default CurrencyInput;
